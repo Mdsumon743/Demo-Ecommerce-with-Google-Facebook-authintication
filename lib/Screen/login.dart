@@ -6,6 +6,7 @@ import 'package:practice/Custom_Widget/custom_button.dart';
 import 'package:practice/Custom_Widget/custom_signin_option.dart';
 import 'package:practice/Custom_Widget/custom_text.dart';
 import 'package:practice/Custom_Widget/custom_textfeild.dart';
+
 import 'package:practice/Screen/signup.dart';
 
 class Login extends StatelessWidget {
@@ -20,6 +21,8 @@ class Login extends StatelessWidget {
     var from = GlobalKey<FormState>();
     final controller = Get.put(Visible());
     final authcontroller = Get.put(AuthControllerSingIn());
+    final authgooglecontroller = Get.put(AuthControllerGoogle());
+    final authfacebookcontroller = Get.put(AuthControllerFacebook());
     final email = authcontroller.lEmail;
     final password = authcontroller.lPassword;
 
@@ -133,12 +136,20 @@ class Login extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        CustomSigninOption(
-                          onTap: () {},
-                          path: 'assets/images/google.png',
+                        Obx(
+                          () => authgooglecontroller.isLoad.value
+                              ? const CircularProgressIndicator()
+                              : CustomSigninOption(
+                                  onTap: () {
+                                    authgooglecontroller.signInWithGoogle();
+                                  },
+                                  path: 'assets/images/google.png',
+                                ),
                         ),
                         CustomSigninOption(
-                          onTap: () {},
+                          onTap: () {
+                            authfacebookcontroller.signinFacebook();
+                          },
                           path: 'assets/images/facebook.png',
                         ),
                         CustomSigninOption(

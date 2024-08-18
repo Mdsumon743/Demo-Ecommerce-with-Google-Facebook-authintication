@@ -38,6 +38,10 @@ dependencies:
   #firabse
   firebase_core:
   firebase_auth:
+  #googlesignin
+  google_sign_in:
+  #facebookauth
+  flutter_facebook_auth:
   #sharedprafarence
   shared_preferences:
   #statemangement

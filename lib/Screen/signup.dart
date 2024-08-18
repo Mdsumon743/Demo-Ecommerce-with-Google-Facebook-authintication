@@ -79,6 +79,8 @@ class Signup extends StatelessWidget {
                     validate: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter number';
+                      }else if(value.length < 11){
+                        return 'Enter valid Number';
                       }
                       return null;
                     },
