@@ -13,6 +13,7 @@ class ThemeChange extends GetxController {
 class Visible extends GetxController {
   RxBool visible = true.obs;
   RxBool visible2 = true.obs;
+  RxBool enable = false.obs;
 
   changeVisible() {
     visible.value = !visible.value;
@@ -21,4 +22,9 @@ class Visible extends GetxController {
   changeVisible2() {
     visible2.value = !visible2.value;
   }
+
+  changeEnable(){
+    enable.value = !enable.value;
+  }
+
 }

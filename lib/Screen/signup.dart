@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:practice/Controller/auth_controller.dart';
@@ -18,9 +19,6 @@ class Signup extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     final controller = Get.put(Visible());
     final authController = Get.put(AuthControllerSingUp());
-    final sNumber = TextEditingController();
-
-    final sConfirmPassword = TextEditingController();
 
     var form = GlobalKey<FormState>();
     return Scaffold(
@@ -63,38 +61,43 @@ class Signup extends StatelessWidget {
                     height: size.height * 0.02,
                   ),
                   CustomTextFeild(
+                    enable: true,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter name';
+                      }
+                      return null;
+                    },
+                    textEditingController: authController.sName,
+                    radius: true,
+                    hint: 'Name',
+                    secure: false,
+                    textInputType: TextInputType.text,
+                  ),
+                  CustomTextFeild(
+                    enable: true,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter email';
+                      } else if (EmailValidator.validate(
+                          authController.sEmail.text)) {
+                        return null;
+                      } else {
+                        return 'Email not valid';
                       }
-                      return null;
                     },
                     textEditingController: authController.sEmail,
-                    radius: true,
+                    radius: false,
                     hint: 'Email',
                     secure: false,
                     textInputType: TextInputType.emailAddress,
-                  ),
-                  CustomTextFeild(
-                    validate: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter number';
-                      }else if(value.length < 11){
-                        return 'Enter valid Number';
-                      }
-                      return null;
-                    },
-                    textEditingController: sNumber,
-                    radius: false,
-                    hint: 'Number',
-                    secure: false,
-                    textInputType: TextInputType.number,
                   ),
                   SizedBox(
                     height: size.height * 0.01,
                   ),
                   Obx(
                     () => CustomTextFeild(
+                      enable: true,
                       validate: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Enter password';
@@ -119,6 +122,7 @@ class Signup extends StatelessWidget {
                   ),
                   Obx(
                     () => CustomTextFeild(
+                      enable: true,
                       validate: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Enter Confirm password';
@@ -130,12 +134,13 @@ class Signup extends StatelessWidget {
                       secure: controller.visible2.value,
                       suffixicon: IconButton(
                           onPressed: () {
+
                             controller.changeVisible2();
                           },
                           icon: controller.visible2.value == true
                               ? const Icon(Icons.visibility_off)
                               : const Icon(Icons.visibility)),
-                      textEditingController: sConfirmPassword,
+                      textEditingController: authController.sConfirmpassword,
                       radius: false,
                       hint: 'Confirm Password',
                       textInputType: TextInputType.visiblePassword,

@@ -40,16 +40,22 @@ dependencies:
   firebase_auth:
   #googlesignin
   google_sign_in:
+  #firestore
+  cloud_firestore:
   #facebookauth
   flutter_facebook_auth:
   #sharedprafarence
   shared_preferences:
+  #emailvalidator
+  email_validator:
   #statemangement
   get:
   #lottileanimation
   lottie:
   #onbordscreen
   smooth_page_indicator:
+  #carouselslider
+  carousel_slider:
 
 
 dev_dependencies:

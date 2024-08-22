@@ -26,9 +26,9 @@ class _SplashState extends State<Splash> {
     if (getData == true) {
       Get.offAll(const OnBordScreen());
     } else if(user != null) {
-      Get.to(const Homepage());
+      Get.offAll(const Homepage());
     }else {
-      Get.to(const Login());
+      Get.offAll(const Login());
     }
   }
 

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -9,6 +11,8 @@ import 'package:practice/Screen/homepage.dart';
 class AuthControllerSingUp extends GetxController {
   final sEmail = TextEditingController();
   final sPassword = TextEditingController();
+  final sName = TextEditingController();
+  final sConfirmpassword = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   RxBool isLoad = false.obs;
 
@@ -16,9 +20,15 @@ class AuthControllerSingUp extends GetxController {
     isLoad.value = true;
     Timer(const Duration(seconds: 1), () async {
       try {
-        await _auth.createUserWithEmailAndPassword(
+        await _auth
+            .createUserWithEmailAndPassword(
           email: sEmail.text,
           password: sPassword.text,
+        )
+            .then(
+          (value) {
+            addUserData(sName.text, sEmail.text, sConfirmpassword.text);
+          },
         );
 
         Get.offAll(const Homepage());
@@ -45,6 +55,15 @@ class AuthControllerSingUp extends GetxController {
       } catch (e) {
         return;
       }
+    });
+  }
+
+  addUserData(String name, String email, String password) async {
+    final firestore = FirebaseFirestore.instance;
+    await firestore.collection('user').doc(email).set({
+      'Name': name,
+      'Email': email,
+      'Password': password,
     });
   }
 }
@@ -107,7 +126,7 @@ class AuthControllerFacebook extends GetxController {
       // Create a credential from the access token
       final OAuthCredential facebookAuthCredential =
           FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
-        Get.offAll(const Homepage());
+      Get.offAll(const Homepage());
       // Once signed in, return the UserCredential
       return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
     } catch (e) {

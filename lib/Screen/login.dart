@@ -28,6 +28,10 @@ class Login extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: background,
+          scrolledUnderElevation: 0,
+        ),
         backgroundColor: background,
         body: Padding(
           padding: const EdgeInsets.all(20),
@@ -57,6 +61,7 @@ class Login extends StatelessWidget {
                       height: size.height * 0.04,
                     ),
                     CustomTextFeild(
+                      enable: true,
                       validate: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Enter email';
@@ -72,6 +77,7 @@ class Login extends StatelessWidget {
                     ),
                     Obx(
                       () => CustomTextFeild(
+                        enable: true,
                         validate: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Enter password';
